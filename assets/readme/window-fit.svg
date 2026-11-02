@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+  <title id="title">跨屏收窗：拖过去，自动收好。</title>
+  <desc id="desc">行为示意，并非应用截图。横屏上的宽窗口拖到竖屏后，按比例缩小并收进可用区域。窗口原本放得下时只调整位置。</desc>
+  <rect width="1200" height="560" rx="16" fill="#F3F6F7"/>
+  <g font-family="Segoe UI, Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="64" y="64" font-size="24" fill="#59717A">AutoWindowAdjust / Windows</text>
+    <text x="60" y="148" font-size="64" font-weight="700" fill="#182D36">拖过去，自动收好。</text>
+    <text x="64" y="198" font-size="28" fill="#59717A">跨屏松手后，窗口回到目标屏幕的边界内。</text>
+    <g id="source-screen" transform="translate(64 252)">
+      <rect width="470" height="230" rx="12" fill="#FFFFFF" stroke="#59717A" stroke-width="2"/>
+      <rect x="2" y="208" width="466" height="20" rx="8" fill="#E2E9EC"/>
+      <rect x="52" y="44" width="342" height="138" rx="8" fill="#E4F2F0" stroke="#087F79" stroke-width="2"/>
+      <path d="M52 76H394" stroke="#087F79" stroke-width="2"/>
+      <path d="M72 105H294M72 126H340M72 147H232" stroke="#A7CECA" stroke-width="8"/>
+      <text x="0" y="274" font-size="26" fill="#182D36">从横屏拖出</text>
+    </g>
+    <g id="drag-direction" fill="none" stroke="#087F79" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M584 366H678M660 348L678 366L660 384"/>
+    </g>
+    <g id="target-screen" transform="translate(752 238)">
+      <rect width="220" height="270" rx="12" fill="#FFFFFF" stroke="#59717A" stroke-width="2"/>
+      <rect x="2" y="248" width="216" height="20" rx="8" fill="#E2E9EC"/>
+      <rect x="-12" y="44" width="340" height="138" rx="8" fill="none" stroke="#B86627" stroke-width="2" stroke-dasharray="7 7"/>
+      <rect x="14" y="70" width="192" height="78" rx="6" fill="#E4F2F0" stroke="#087F79" stroke-width="3"/>
+      <path d="M14 94H206" stroke="#087F79" stroke-width="2"/>
+      <path d="M30 111H144M30 128H181" stroke="#A7CECA" stroke-width="6"/>
+      <circle cx="110" cy="210" r="16" fill="#087F79"/>
+      <path d="M102 210L108 216L119 203" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="0" y="304" font-size="26" fill="#182D36">在竖屏收好</text>
+    </g>
+    <text x="1136" y="64" font-size="20" text-anchor="end" fill="#59717A">行为示意</text>
+  </g>
+</svg>
