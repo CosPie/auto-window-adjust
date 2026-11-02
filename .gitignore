@@ -1,6 +1,2 @@
-bin/
-obj/
 dist/
-tests/bin/
-tests/obj/
 target/

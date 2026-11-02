@@ -16,7 +16,7 @@
 
 这是一个用 **Rust + Win32** 实现的 Windows 托盘小工具，适合在横屏、竖屏或不同尺寸的显示器之间频繁移动窗口的人。保留原来的鼠标拖拽习惯，不需要先设置分区或记住快捷键。
 
-**v0.2.0 x64 EXE 仅 221.5 KiB**，相比 v0.1.0 的 154.4 MiB 减小约 **99.86%**。无需打包 .NET 或界面框架运行时。
+**v0.2.0 x64 EXE 仅 221.5 KiB**，单文件运行，仅依赖 Windows 自带的系统 DLL。
 
 ## 自动调整什么？
 
@@ -31,7 +31,7 @@
 ## 快速开始
 
 1. 打开 [Releases](https://github.com/CosPie/auto-window-adjust/releases/latest)，下载 **AutoWindowAdjust.exe**。
-2. 把文件放到固定目录，双击运行。免安装，无需 .NET 或额外的 VC++ 运行时安装包。
+2. 把文件放到固定目录，双击运行。免安装，无需额外的运行时安装包。
 3. 将一个普通窗口拖到另一块屏幕，松开鼠标即可。
 
 启动后没有主窗口，会出现托盘提示。图标可能藏在任务栏右下角的 **「显示隐藏的图标」** 中。
@@ -98,8 +98,6 @@ cargo test --locked
 - `SetWindowPos`：调整窗口大小与位置。
 
 核心几何计算位于 [src/geometry.rs](./src/geometry.rs)，窗口事件、托盘菜单和开机启动逻辑位于 [src/platform.rs](./src/platform.rs)。
-
-`v0.1.0` 为最初的 .NET 实现，`v0.2.0` 起改用 Rust；旧版源代码和安装包仍可在 Git 历史及 Releases 中查看。
 
 </details>
 
