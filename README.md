@@ -14,7 +14,9 @@
   <img src="./assets/readme/window-fit.svg" width="100%" alt="行为示意：把横屏上的窗口拖到竖屏，松手后窗口缩小并收进竖屏的可用区域。">
 </p>
 
-这是一个 Windows 托盘小工具，适合在横屏、竖屏或不同尺寸的显示器之间频繁移动窗口的人。保留原来的鼠标拖拽习惯，不需要先设置分区或记住快捷键。
+这是一个用 **Rust + Win32** 实现的 Windows 托盘小工具，适合在横屏、竖屏或不同尺寸的显示器之间频繁移动窗口的人。保留原来的鼠标拖拽习惯，不需要先设置分区或记住快捷键。
+
+**v0.2.0 x64 EXE 仅 221.5 KiB**，相比 v0.1.0 的 154.4 MiB 减小约 **99.86%**。无需打包 .NET 或界面框架运行时。
 
 ## 自动调整什么？
 
@@ -29,7 +31,7 @@
 ## 快速开始
 
 1. 打开 [Releases](https://github.com/CosPie/auto-window-adjust/releases/latest)，下载 **AutoWindowAdjust.exe**。
-2. 把文件放到固定目录，双击运行。免安装，无需另外安装 .NET。
+2. 把文件放到固定目录，双击运行。免安装，无需 .NET 或额外的 VC++ 运行时安装包。
 3. 将一个普通窗口拖到另一块屏幕，松开鼠标即可。
 
 启动后没有主窗口，会出现托盘提示。图标可能藏在任务栏右下角的 **「显示隐藏的图标」** 中。
@@ -65,7 +67,7 @@ HKCU\Software\Microsoft\Windows\CurrentVersion\Run\AutoWindowAdjust
 
 ## 开发与验证
 
-需要 Windows 和 **.NET 8 SDK 或更新版本**。
+需要 Windows、**Rust 1.85+（MSVC 工具链）**，以及 Visual Studio Build Tools 的「使用 C++ 的桌面开发」组件（MSVC 链接器与 Windows SDK）。
 
 ```powershell
 git clone https://github.com/CosPie/auto-window-adjust.git
@@ -73,29 +75,31 @@ cd auto-window-adjust
 ./build.ps1
 ```
 
-脚本先运行验证，再生成 `dist/AutoWindowAdjust.exe`，产物自带运行时。首次发布需要联网下载 .NET 运行时包。
+脚本依次检查格式、运行 Clippy 和测试，再生成 `dist/AutoWindowAdjust.exe`、SHA-256 校验文件与许可证。构建前请退出正在运行的同路径 EXE。首次构建需要联网下载 Cargo 依赖。发布版静态链接 C 运行时，仅依赖 Windows 自带的系统 DLL。
 
 仅运行验证：
 
 ```powershell
-dotnet run --project tests/AutoWindowAdjust.Tests.csproj -c Release
+cargo test --locked
 ```
 
-验证包含 11 个几何计算用例，覆盖横竖屏、负坐标、任务栏和固定尺寸；还会在当前每块显示器上创建临时窗口，检查实际 Win32 调整和重复调整的稳定性。原生窗口验证需要可交互的 Windows 桌面。
+验证包含 11 个几何计算用例，覆盖横竖屏、负坐标、任务栏和固定尺寸；还会在当前每块显示器上创建临时窗口，检查实际 Win32 调整、固定尺寸窗口与重复调整的稳定性，并验证托盘启动、暂停恢复及退出。原生窗口和托盘验证需要可交互的 Windows 桌面。
 
 提交改动前，建议手动检查跨屏双向拖动、不同缩放比例、Alt 跳过、同屏拖动、边框缩放、最大化/贴靠以及托盘暂停与退出。
 
 <details>
 <summary>实现概览</summary>
 
-使用 C# / WinForms 和 Win32 API：
+使用 Rust 和 `windows-sys` 调用 Win32 API：
 
 - `SetWinEventHook`：监听移动 / 缩放开始和结束。
 - `MonitorFromPoint` / `GetMonitorInfo`：确定目标屏幕与可用区域。
 - Per-Monitor V2 DPI 感知和 DWM 可见边框：计算窗口的实际显示范围。
 - `SetWindowPos`：调整窗口大小与位置。
 
-核心几何计算位于 [WindowGeometry.cs](./WindowGeometry.cs)，事件处理位于 [WindowWatcher.cs](./WindowWatcher.cs)，托盘入口位于 [TrayContext.cs](./TrayContext.cs)。
+核心几何计算位于 [src/geometry.rs](./src/geometry.rs)，窗口事件、托盘菜单和开机启动逻辑位于 [src/platform.rs](./src/platform.rs)。
+
+`v0.1.0` 为最初的 .NET 实现，`v0.2.0` 起改用 Rust；旧版源代码和安装包仍可在 Git 历史及 Releases 中查看。
 
 </details>
 
@@ -106,3 +110,5 @@ dotnet run --project tests/AutoWindowAdjust.Tests.csproj -c Release
 ## 许可证
 
 [MIT](./LICENSE) © 2026 CosPie
+
+依赖许可见 [THIRD-PARTY-NOTICES.txt](./THIRD-PARTY-NOTICES.txt)。

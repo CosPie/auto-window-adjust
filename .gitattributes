@@ -4,3 +4,6 @@
 *.md text eol=lf
 *.svg text eol=lf
 *.ps1 text eol=crlf
+*.rs text eol=lf
+*.toml text eol=lf
+Cargo.lock text eol=lf
